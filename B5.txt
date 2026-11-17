@@ -1,0 +1,61 @@
+#include <iostream>
+using namespace std;
+struct Node {
+int seat;
+Node *prev, *next;
+};
+Node *head[10] = {NULL};
+void add(int r,int s) {
+Node *p=new Node{s,NULL,head[r]};
+if(head[r]) head[r]->prev=p;
+head[r]=p;
+}
+void create() {
+for(int i=0;i<10;i++)
+for(int j=1;j<=7;j++) add(i,j);
+// Initial bookings
+int b[5][2]={{1,2},{2,5},{4,3},{6,7},{8,1}};
+for(int k=0;k<5;k++) {
+Node *p=head[b[k][0]-1];
+while(p && p->seat!=b[k][1]) p=p->next;
+if(p->prev) p->prev->next=p->next;
+else head[b[k][0]-1]=p->next;
+if(p->next) p->next->prev=p->prev;
+delete p;
+}
+}
+void display() {
+for(int i=0;i<10;i++) {
+cout<<"Row "<<i+1<<": ";
+for(Node *p=head[i];p;p=p->next) cout<<p->seat<<" "; cout<<endl;
+}
+}
+void book() {
+int r,s; cin>>r>>s;
+Node *p=head[r-1];
+while(p && p->seat!=s) p=p->next;
+if(!p) cout<<"Already booked\n";
+else {
+if(p->prev) p->prev->next=p->next;
+else head[r-1]=p->next;
+if(p->next) p->next->prev=p->prev;
+delete p;
+cout<<"Booked\n";
+}
+}
+void cancel() {
+int r,s; cin>>r>>s;
+add(r-1,s);
+cout<<"Booking cancelled\n";
+}
+int main() {
+create();
+int ch;
+do {
+cout<<"\n1.Display 2.Book 3.Cancel 4.Exit\n";
+cin>>ch;
+if(ch==1) display();
+else if(ch==2) { cout<<"Row Seat: "; book(); }
+else if(ch==3) { cout<<"Row Seat: "; cancel(); }
+} while(ch!=4);
+}

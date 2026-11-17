@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+// Selection Sort
+void selectionSort(float a[], int n)
+{
+for (int i = 0; i < n - 1; i++)
+{
+int min = i;
+for (int j = i + 1; j < n; j++)
+{
+if (a[j] < a[min])
+min = j;
+}
+swap(a[i], a[min]);
+}
+}
+// Bubble Sort
+void bubbleSort(float a[], int n)
+{
+for (int i = 0; i < n - 1; i++)
+{
+for (int j = 0; j < n - i - 1; j++)
+{
+if (a[j] > a[j + 1])
+swap(a[j], a[j + 1]);
+}
+}
+}
+int main()
+{
+int n;
+float a[100], b[100];
+cout << "Enter number of students: ";
+cin >> n;
+cout << "Enter percentages:\n";
+for (int i = 0; i < n; i++)
+{ cin >> a[i];
+b[i] = a[i];
+}
+selectionSort(a, n);
+bubbleSort(b, n);
+cout << "\nSelection Sort (Ascending):\n";
+for (int i = 0; i < n; i++)
+cout << a[i] << " ";
+cout << "\n\nBubble Sort (Ascending):\n";
+for (int i = 0; i < n; i++)
+cout << b[i] << " ";
+cout << "\n\nTop Five Scores:\n";
+for (int i = n - 1, count = 0; i >= 0 && count < 5; i--, count++)
+cout << b[i] << " ";
+return 0;
+}

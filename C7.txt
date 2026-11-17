@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+int queue[5];
+int front = -1, rear = -1;
+// Add job
+void addJob(int job)
+{
+if (rear == 4)
+cout << "Queue is Full\n";
+else
+{
+if (front == -1) front = 0;
+queue[++rear] = job;
+cout << "Job added: " << job << endl;
+}
+}
+// Delete job
+void deleteJob()
+{
+if (front == -1 || front > rear)
+cout << "Queue is Empty\n";
+else
+{
+cout << "Job deleted: " << queue[front++] << endl;
+}
+}
+// Display queue
+void display()
+{
+if (front == -1 || front > rear)
+cout << "Queue is Empty\n";
+else
+{
+cout << "Jobs: ";
+for (int i = front; i <= rear; i++)
+cout << queue[i] << " "; cout << endl;
+}
+}
+int main()
+{
+addJob(101);
+addJob(102);
+addJob(103);
+display();
+deleteJob();
+display();
+return 0;
+}

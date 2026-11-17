@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+struct Node {
+int data;
+Node *left, *right;
+};
+Node* insert(Node* r, int x) {
+if(r == NULL)
+return new Node{x, NULL, NULL};
+if(x < r->data)
+r->left = insert(r->left, x);
+else
+r->right = insert(r->right, x);
+return r;
+}
+int height(Node* r) {
+if(r == NULL) return 0;
+int l = height(r->left);
+int h = height(r->right);
+return 1 + (l > h ? l : h);
+}
+int minimum(Node* r) {
+while(r->left)
+r = r->left;
+return r->data;
+}
+bool search(Node* r, int x) {
+if(r == NULL) return false;
+if(r->data == x) return true;
+if(x < r->data) return search(r->left,x);
+return search(r->right,x);
+} void mirror(Node* r) {
+if(r == NULL) return;
+swap(r->left,r->right);
+mirror(r->left);
+mirror(r->right);
+}
+int main() {
+Node* root = NULL;
+int n,x;
+cout<<"Enter nodes: ";
+cin>>n;
+cout<<"Enter values: ";
+while(n--) {
+cin>>x;
+root=insert(root,x);
+}
+cout<<"Enter new node: ";
+cin>>x;
+root=insert(root,x);
+cout<<"Longest path: "<<height(root)<<endl;
+cout<<"Minimum: "<<minimum(root)<<endl;
+cout<<"Search value: ";
+cin>>x;
+cout<<(search(root,x) ? "Found" : "Not Found")<<endl;
+mirror(root);
+cout<<"Tree mirrored";
+return 0;
+}

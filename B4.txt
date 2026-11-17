@@ -1,0 +1,73 @@
+#include <iostream>
+using namespace std;
+struct Node {
+int prn;
+string name;
+Node* next;
+};
+Node* head = NULL;
+// Add member
+void add() {
+Node* n = new Node;
+cout << "Enter PRN and Name: ";
+cin >> n->prn >> n->name;
+n->next = NULL;
+if (head == NULL) {
+head = n;
+} else {
+Node* temp = head;
+while (temp->next != NULL)
+temp = temp->next;
+temp->next = n;
+}
+}
+// Delete member
+void del() {
+int p;
+cout << "Enter PRN to delete: ";
+cin >> p; Node *temp = head, *prev = NULL;
+while (temp != NULL && temp->prn != p) {
+prev = temp;
+temp = temp->next;
+}
+if (temp == NULL) {
+cout << "Not found\n";
+} else {
+if (prev == NULL)
+head = temp->next;
+else
+prev->next = temp->next;
+delete temp;
+cout << "Deleted\n";
+}
+}
+// Display members
+void display() {
+Node* temp = head;
+int count = 0;
+while (temp != NULL) {
+cout << temp->prn << " " << temp->name << endl;
+temp = temp->next;
+count++;
+}
+cout << "Total members: " << count << endl;
+}
+// Main
+int main() {
+int ch;
+do {
+cout << "\n1.Add Member";
+cout << "\n2.Delete Member";
+cout << "\n3.Display Members";
+cout << "\n4.Exit";
+cout << "\nEnter choice: ";
+cin >> ch;
+switch (ch) { case 1: add(); break;
+case 2: del(); break;
+case 3: display(); break;
+case 4: cout << "Exit"; break;
+default: cout << "Invalid choice";
+}
+} while (ch != 4);
+return 0;
+}
